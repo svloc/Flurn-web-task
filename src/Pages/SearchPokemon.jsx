@@ -13,10 +13,8 @@ const SearchPokemon = () => {
             setError('Please enter a Pokemon name');
             return;
         }
-
         setError('');
         setIsLoading(true);
-
         try {
             const pokemon = await PokemonService.searchPokemon(searchTerm);
             console.log("pokemon res-->", pokemon);

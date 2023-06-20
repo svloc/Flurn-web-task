@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PokemonService from "../Service/PokemonService";
 import { useNavigate } from "react-router-dom";
-// import "./styles.css";
+import SearchPokemon from "./SearchPokemon";
+
 
 const fetchPokemonData = async (len) => {
     const promiseArr = [];
@@ -48,24 +49,29 @@ export default function ShowPokemon() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, [data]);
-    
+
     const handleNavigate = (pokemon) => {
-        const {name}=pokemon;
+        const { name } = pokemon;
         navigate(`/${name}`);
-      };
-    
+    };
+
     return (
-        <div className="App">
-            <h1 className="header">Pokemon Infinite Scroll</h1>
-            <div id="content">
-                {data.map((pokemon, index) => (
-                    <div className="card" key={"num" + index} onClick={()=>handleNavigate(pokemon)}>
-                        <img src={pokemon.sprite} alt={pokemon.name} />
-                        <h1 className="pokemonName"> {pokemon.name} </h1>
-                    </div>
-                ))}
+        <>
+            <div className="navbar">
+                <SearchPokemon />
+            </div>
+            <div className="container ">
+
+                <div className="d-flex flex-wrap gap-1 align-items-center justify-cente">
+                    {data.map((pokemon, index) => (
+                        <div className="card d-flex flex-direction-col justify-center align-items-center" key={"num" + index} onClick={() => handleNavigate(pokemon)}>
+                            <img src={pokemon.sprite} alt={pokemon.name} width={'100%'} />
+                            <h1> {pokemon.name} </h1>
+                        </div>
+                    ))}
+                </div>
                 {isLoading && <h1 className="pokemonName">{message}</h1>}
             </div>
-        </div>
+        </>
     );
 }

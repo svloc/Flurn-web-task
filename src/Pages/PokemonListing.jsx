@@ -20,21 +20,9 @@ function PokemonListing() {
 
 
     return (
-        <div>
-            {isSuccess ? 
-            <>
-                <p>Result receview</p>
 
-                <div >
-                <ShowPokemon></ShowPokemon>
-                </div>
-            </>
-                :
-                <div>Something went wrong</div>
+        isSuccess ? <ShowPokemon /> : <div>Something went wrong</div>
 
-            }
-
-        </div>
     )
 }
 

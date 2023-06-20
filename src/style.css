@@ -1,17 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 *,
 *::before,
 *::before {
-box-sizing:border-box;
-margin:0;
-padding:0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-color:#495057 ;  /* Color for heading */
-color:#6c757d; /* color for p*/
-font-size:0.875rem;
-line-height:1.6;
-font-weight:400;
-background-color:#fff;
+body {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    font-weight: 400;
+    background-color: #f0f1f3;
+    font-family: 'Lato', sans-serif;
+    color: #3f3844;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: #3f3844;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.d-flex {
+    display: flex !important;
+}
+
+.flex-direction-col {
+    flex-direction: column !important;
+}
+
+.justify-center {
+    justify-content: center !important;
+}
+
+.align-items-center {
+    align-items: center !important;
+}
+
+.flex-wrap {
+    flex-wrap: wrap !important;
+}
+
+.gap-1 {
+    gap: 1rem !important;
+}
+
+input {
+    padding: 0.55em 1em;
+    border-radius: 0.25rem;
+    outline: 0;
+    border: 1px solid transparent;
+    background-color: #fff;
+    color: #000;
+    font-size: 1rem;
+    box-shadow: 0 1px 6px 0 rgb(32 33 36 / 28%);
+    font-family: 'Lato', sans-serif;
+}
+
+button {
+    padding: 0.65em 1em;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 0.25rem !important;
+    cursor: pointer;
+    transition: all linear 0.3s;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 1px 2px rgb(0 0 0 / 23%);
+    font-family: 'Lato', sans-serif;
+}
+
+
+@media (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+
+
+.card {
+    background: #fff;
+    width: 260px;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.navbar{
+    height: 65px;
+    background: #fff;
+    width: 100%;
+    margin-bottom: 1rem;
 }

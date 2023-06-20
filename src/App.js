@@ -7,17 +7,9 @@ import PokemonDetails from "./Pages/PokemonDetails";
 
 export default function App() {
   return (
-    <div>
-      <h1>Hello StackBlitz!</h1>
-      <p>Start editing to see some magic happen :)</p>
-      <SearchPokemon></SearchPokemon>
-
-      <PokemonListing />
-
-      <Routes>
-          <Route path="/:name" element={<PokemonDetails />} />
-      </Routes>
-
-    </div>
+    <Routes>
+      <Route path="/" exact element={<PokemonListing />} />
+      <Route path="/:name" element={<PokemonDetails />} />
+    </Routes>
   );
 }
