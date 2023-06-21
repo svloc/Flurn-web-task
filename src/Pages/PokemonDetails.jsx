@@ -6,8 +6,9 @@ import PokemonService from '../Service/PokemonService';
 function PokemonDetails() {
     const { name } = useParams();
     const [data, setData] = useState([]);
+    const [pokemonImg, setPokemonImg] = useState('');
     const [bookmarks, setBookmarks] = useState([]);
-
+   
     useEffect(() => {
         fetchData();
         getBookmarks();
@@ -15,7 +16,10 @@ function PokemonDetails() {
 
     const fetchData = async () => {
         const resp = await PokemonService.searchPokemon(name);
+        const resImg= await PokemonService.getPokemonImage(resp.id);
         setData(resp);
+        console.log(resImg);
+        setPokemonImg(resImg);
     };
 
     const getBookmarks=()=>{
@@ -28,12 +32,12 @@ function PokemonDetails() {
        localStorage.setItem("bookmarks_data",JSON.stringify(bookmark));
        bookmarks.push(bookmarks_data);
     }
-
+  
     return (
         <div>
-            <p>Name: {name}</p>
-
-            <button onClick={()=>setBookmarksData(name)}></button>
+            <p>Name: {name}</p> 
+            <img src={pokemonImg} alt={name}/>
+            <button onClick={()=>setBookmarksData(name)}>Book mark</button>
         </div>)
 }
 
