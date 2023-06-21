@@ -19,7 +19,8 @@ export default function ShowPokemon() {
     const [pokemonImg, setPokemonImg] = useState([]);
 
     const navigate = useNavigate();
-    const bgImages = [bgBlobImg1, bgBlobImg2, bgBlobImg3,bgBlobImg4,bgBlobImg5, bgBlobImg6];
+    const bgImages = [bgBlobImg1, bgBlobImg2, bgBlobImg3, bgBlobImg4, bgBlobImg5, bgBlobImg6];
+
     useEffect(() => {
         fetchInitialPokemonData();
     }, []);
@@ -73,16 +74,23 @@ export default function ShowPokemon() {
         navigate(`/${name}`);
     };
 
+    const handleSearchResult = (searchResult) => {
+        setData([{name:searchResult.name}]);
+    };
+    const handleResetData = () => {
+        fetchInitialPokemonData();
+    };
+
     return (
         <>
-            <div className="navbar">
-                <SearchPokemon />
+            <div className="navbar d-flex align-items-center">
+                <SearchPokemon handleSearchResult={handleSearchResult} resetData={handleResetData} />
             </div>
             <div className="container">
-                <div className="d-flex flex-wrap gap-1 align-items-center justify-cente">
+                <div className="d-flex flex-wrap gap-1 align-items-center justify-center card-wrapper">
                     {data.map((pokemon, index) => (
                         <div className="card d-flex flex-direction-col justify-center align-items-center"
-                            key={"num" + index} onClick={() => handleNavigate(pokemon)} style={{ backgroundImage: `url(${bgImages[index % 6]})`}} >
+                            key={"num" + index} onClick={() => handleNavigate(pokemon)} style={{ backgroundImage: `url(${bgImages[index % 6]})` }} >
                             <img src={pokemonImg[index]} alt={pokemon.name} width={'100%'} className="pokemon-img" />
                             <h1> {pokemon.name} </h1>
                         </div>

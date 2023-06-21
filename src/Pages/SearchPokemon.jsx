@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PokemonService from '../Service/PokemonService';
 
-const SearchPokemon = () => {
+const SearchPokemon = ({ handleSearchResult, resetData }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (!searchTerm) {
             setError('Please enter a Pokemon name');
             return;
@@ -17,7 +16,7 @@ const SearchPokemon = () => {
         setIsLoading(true);
         try {
             const pokemon = await PokemonService.searchPokemon(searchTerm);
-            console.log("pokemon res-->", pokemon);
+            handleSearchResult(pokemon);
         } catch (error) {
             setError('Failed to fetch Pokemon. Please try again.');
         } finally {
@@ -25,20 +24,26 @@ const SearchPokemon = () => {
         }
     };
 
+    const handleInputChange = (e) => {
+        const trimmedValue = e.target.value.trim().toLowerCase();
+        setSearchTerm(trimmedValue);
+        resetData();
+    };
+
+
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Enter Pokemon name"
-                />
+        <>
+            <form onSubmit={handleSubmit} className='w-50 d-flex'>
+                <input type="search" className='w-100' value={searchTerm} onChange={handleInputChange} placeholder="Enter Pokemon Name or ID" />
                 <button type="submit">Search</button>
             </form>
-            {isLoading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
-        </div>
+            {isLoading && <div className="spinner">
+                <div className="bounce1"></div>
+                <div className="bounce2"></div>
+                <div className="bounce3"></div>
+            </div>}
+            {error && <p className='text-red ml-1'>{error}</p>}
+        </>
     );
 };
 

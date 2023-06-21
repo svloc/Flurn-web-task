@@ -1,6 +1,6 @@
+
 const url="https://pokeapi.co/api/v2";
 const pokemon_images_url="https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world";
-
 class PokemonService {
   static async searchPokemon(pokemonName) {
     const response = await fetch(`${url}/pokemon/${pokemonName}`);
