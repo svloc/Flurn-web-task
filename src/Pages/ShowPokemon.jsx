@@ -17,7 +17,7 @@ export default function ShowPokemon() {
     const [isLoading, setLoading] = useState(true);
     const [nextPokemonUrl, setNextPokemonUrl] = useState('');
     const [pokemonImg, setPokemonImg] = useState([]);
-
+    const [pokemonImgId, setPokemonImgId] = useState(0);
     const navigate = useNavigate();
     const bgImages = [bgBlobImg1, bgBlobImg2, bgBlobImg3, bgBlobImg4, bgBlobImg5, bgBlobImg6];
 
@@ -75,10 +75,13 @@ export default function ShowPokemon() {
     };
 
     const handleSearchResult = (searchResult) => {
+        setPokemonImgId(searchResult.id);
         setData([{name:searchResult.name}]);
     };
+
     const handleResetData = () => {
         fetchInitialPokemonData();
+        setPokemonImgId(0);
     };
 
     return (
@@ -91,7 +94,7 @@ export default function ShowPokemon() {
                     {data.map((pokemon, index) => (
                         <div className="card d-flex flex-direction-col justify-center align-items-center"
                             key={"num" + index} onClick={() => handleNavigate(pokemon)} style={{ backgroundImage: `url(${bgImages[index % 6]})` }} >
-                            <img src={pokemonImg[index]} alt={pokemon.name} width={'100%'} className="pokemon-img" />
+                            <img src={pokemonImgId==0 ? pokemonImg[index]:pokemonImg[pokemonImgId-1]} alt={pokemon.name} width={'100%'} className="pokemon-img" />
                             <h1> {pokemon.name} </h1>
                         </div>
                     ))}
