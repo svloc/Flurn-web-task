@@ -1,6 +1,7 @@
 
-const url="https://pokeapi.co/api/v2";
-const pokemon_images_url="https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world";
+const url = "https://pokeapi.co/api/v2";
+const pokemon_images_url = "https://unpkg.com/pokeapi-sprites@2.0.2/sprites/pokemon/other/dream-world";
+
 class PokemonService {
   static async searchPokemon(pokemonName) {
     const response = await fetch(`${url}/pokemon/${pokemonName}`);
@@ -37,6 +38,36 @@ class PokemonService {
     const data = await response.json();
     return data;
   }
+
+
+  static async getPokemonEggGroup(id) {
+    const response = await fetch(`${url}/egg-group/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch Pokemon List');
+    }
+    const data = await response.json();
+    return data;
+  }
+  static async getPokemonGrowthRate(id) {
+    const response = await fetch(`${url}/growth-rate/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch Pokemon List');
+    }
+    const data = await response.json();
+    return data;
+  }
+  static async getPokemonShape(id) {
+    const response = await fetch(`${url}/pokemon-shape/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch Pokemon List');
+    }
+    const data = await response.json();
+    return data;
+  }
+
+  
+
+
 
 
 

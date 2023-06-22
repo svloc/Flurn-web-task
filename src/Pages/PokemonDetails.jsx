@@ -7,6 +7,10 @@ function PokemonDetails() {
     const { name } = useParams();
     const [data, setData] = useState([]);
     const [pokemonImg, setPokemonImg] = useState('');
+    const [pokemonEggGroup, setPokemonEggGroup] = useState('');
+    const [pokemonGrowthRate, setPokemonGrowthRate] = useState("");
+    const [pokemonShape, setPokemonShape] = useState('');
+
     const [bookmarkStatus, setBookmarkStatus] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -15,14 +19,46 @@ function PokemonDetails() {
         fetchData();
         getBookmarks();
     }, []);
-
     const fetchData = async () => {
         setIsLoading(true);
-        const resp = await PokemonService.searchPokemon(name);
-        const resImg = await PokemonService.getPokemonImage(resp.id);
-        setData(resp);
-        setPokemonImg(resImg);
-        setIsLoading(false);
+
+        try {
+            const resp = await PokemonService.searchPokemon(name);
+            const promises = [
+                PokemonService.getPokemonImage(resp?.id),
+                PokemonService.getPokemonEggGroup(resp?.id),
+                PokemonService.getPokemonGrowthRate(resp?.id),
+                PokemonService.getPokemonShape(resp?.id)
+            ];
+
+            const results = await Promise.allSettled(promises);
+            results.forEach((result, index) => {
+                if (result.status === 'fulfilled') {
+                    const data = result.value;
+                    if (index === 0) {
+                        setPokemonImg(data);
+                    } else if (index === 1) {
+                        setPokemonEggGroup(data?.name);
+                    } else if (index === 2) {
+                        setPokemonGrowthRate(data?.name);
+                    } else if (index === 3) {
+                        setPokemonShape(data?.name);
+                    }
+                } else {
+                    console.error('API call failed:', result.reason);
+                    // setPokemonImg(defaultImg);
+                    setPokemonEggGroup('NA');
+                    setPokemonGrowthRate('NA');
+                    setPokemonShape('NA');
+                }
+            });
+
+            setData(resp);
+        } catch (error) {
+            console.error('Failed to fetch data:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const getBookmarks = () => {
@@ -82,13 +118,13 @@ function PokemonDetails() {
                         </div>
                     </div>
                     <div className="block">
-                        <p className="d-flex justify-between align-items-center">Gender <span className="price">?<sub>?</sub></span></p>
+                        <p className="d-flex justify-between align-items-center">Grouth Rate <span className="price">{pokemonGrowthRate}</span></p>
                     </div>
                     <div className="block">
-                        <p className="d-flex justify-between align-items-center">Egg Groups<span className="price">?<sub>?</sub></span></p>
+                        <p className="d-flex justify-between align-items-center">Egg Groups<span className="price">{pokemonEggGroup}</span></p>
                     </div>
                     <div className="block">
-                        <p className="d-flex justify-between align-items-center">Egg Cycle<span className="price">?<sub>?</sub></span></p>
+                        <p className="d-flex justify-between align-items-center">Shape<span className="price">{pokemonShape}</span></p>
                     </div>
                 </div>
 
