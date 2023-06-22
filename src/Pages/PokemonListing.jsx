@@ -11,7 +11,9 @@ function PokemonListing() {
     const loadPokemonListing = async () => {
         try {
             const pokemon = await PokemonService.getPokemonList();
-            setIsSuccess(true);
+            if (pokemon) {
+                setIsSuccess(true);
+            }
         } catch (error) {
             setError('Failed to fetch Pokemon. Please try again.');
         }
